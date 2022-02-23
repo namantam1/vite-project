@@ -14,7 +14,7 @@ const config = {
         glass: resolve(__dirname, "src/glass-morphic/index.html"),
       },
     },
-  }
+  },
 };
 
 export default config;

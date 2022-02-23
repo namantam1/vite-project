@@ -29,7 +29,7 @@ const getColors = () => {
             .forEach(() => {
               const node = document.createElement("section");
               const { color, backgroundColor } = getColors();
-              console.log(color, backgroundColor);
+              // console.log(color, backgroundColor);
               node.style.color = color;
               node.style.backgroundColor = backgroundColor;
               node.innerHTML = `<h1>${couter++}</h1>`;
