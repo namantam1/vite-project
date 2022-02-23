@@ -1,52 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Scroll Effect</title>
-        <style>
-            * {
-                padding: 0;
-                margin: 0;
-                box-sizing: border-box;
-                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-                    Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
-                    "Helvetica Neue", sans-serif;
-            }
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scroll Effect</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      }
 
-            .container {
-                height: 100vh;
-                overflow-y: scroll;
-                scroll-snap-type: y mandatory;
-                scroll-behavior: smooth;
-            }
+      .container {
+        height: 100vh;
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory;
+      }
 
-            section {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 100vh;
-                color: white;
-                scroll-snap-align: start;
-            }
+      section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        color: white;
+        scroll-snap-align: start;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="observer"></div>
+    </div>
 
-            .one { background-color: rgb(226, 21, 21); }
-            .two { background-color: rgb(29, 141, 29); }
-            .three { background-color: rgb(211, 211, 38); }
-            .four { background-color: rgb(255, 166, 0); }
-            .five { background-color: rgb(235, 66, 235); }
-            .six { background-color: rgb(255, 174, 187) }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <section class="one"><h1>One</h1></section>
-            <section class="two"><h1>Two</h1></section>
-            <section class="three"><h1>Three</h1></section>
-            <section class="four"><h1>Four</h1></section>
-            <section class="five"><h1>Five</h1></section>
-            <section class="six"><h1>Six</h1></section>
-        </div>
-    </body>
+    <script>
+      const getColors = () => {
+        const rgb = [
+          Math.round(Math.random() * 255),
+          Math.round(Math.random() * 255),
+          Math.round(Math.random() * 255),
+        ];
+        const brightness = Math.round(
+          (parseInt(rgb[0]) * 299 +
+            parseInt(rgb[1]) * 587 +
+            parseInt(rgb[2]) * 114) /
+            1000
+        );
+        return {
+          color: brightness > 125 ? "black" : "white",
+          backgroundColor: `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`,
+        };
+      };
+
+      (function (bufferSize=10) {
+        let couter = 1;
+        const target = document.querySelector(".observer");
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const { target } = entry;
+                const newNodes = document.createDocumentFragment();
+                Array(bufferSize)
+                  .fill()
+                  .forEach(() => {
+                    const node = document.createElement("section");
+                    const { color, backgroundColor } = getColors();
+                    console.log(color, backgroundColor);
+                    node.style.color = color;
+                    node.style.backgroundColor = backgroundColor;
+                    node.innerHTML = `<h1>${couter++}</h1>`;
+                    newNodes.append(node);
+                  });
+
+                target.parentNode.insertBefore(newNodes, target);
+              }
+            });
+          },
+          {
+            rootMargin: "1000%",
+            root: document.querySelector(".container"),
+            threshold: [],
+          }
+        );
+        observer.observe(target);
+      })(50);
+    </script>
+  </body>
 </html>
