@@ -5,13 +5,40 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
+    <link rel="stylesheet" href="./style.scss" />
   </head>
   <body>
-    <div id="app">
-      <ul>
-        <li><a href="./scroll-effect/">Scroll Effect</a></li>
-        <li><a href="./glass-morphic/">GlassMorphic</a></li>
-      </ul>
+    <div class="wrapper">
+      <header>
+        <h1>CSS UI designs</h1>
+      </header>
+      <main class="container">
+        <ul>
+          <li>
+            <a href="./scroll-effect/">
+              <h2>Scroll Effect</h2>
+              <p>Vertical scroll stepwise effect upto infinity</p>
+            </a>
+          </li>
+          <li>
+            <a href="./glass-morphic/">
+              <h2>GlassMorphic</h2>
+              <p>Beautiful Glass morphic UI</p>
+            </a>
+          </li>
+        </ul>
+      </main>
+      <footer>
+        <div>
+          <a target="_blank" href="https://github.com/namantam1/vite-project">
+            <img
+              src="./glass-morphic/images/github.svg"
+              alt="github-source-code"
+            />
+            Source code
+          </a>
+        </div>
+      </footer>
     </div>
   </body>
 </html>
